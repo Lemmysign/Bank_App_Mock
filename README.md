@@ -18,7 +18,6 @@ A mock banking app built with Java, Spring MVC, Thymeleaf, and PostgreSQL, featu
 🔧 Setup
 
 1. Clone the repo:
-git clone https://github.com/yourusername/Bank_App_Mock.git
 
    cd Bank_App_Mock
 
