@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-4" id="dashboard">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <img src="logo.png" alt="Company Logo" height="50">
+        <a th:href="@{/loginPage}" class="btn btn-outline-secondary btn-sm">Logout</a>
+    </div>
+
+    <div th:if="${message}" class="alert alert-info alert-dismissible fade show" role="alert">
+        <span th:text="${message}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+
+    <div class="card p-4">
+        <h2 class="text-primary">Welcome, <span th:text="${customer.name}">John Doe</span></h2>
+        <p><strong>Account Number:</strong> <span th:text="${customer.accountNo}">1234567890</span></p>
+        <p><strong>Balance:</strong> ₦<span th:text="${customer.balance}">0.00</span></p>
+
+        <div class="d-flex gap-3 mt-3"><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addFundsModal">Add Funds</button>
+            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#withdrawFundsModal">Withdraw Funds</button>
+        </div>
+    </div>
+</div>
+
+<!-- Add Funds Modal -->
+<div class="modal fade" id="addFundsModal" tabindex="-1" aria-labelledby="addFundsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Funds</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/addFunds}" method="post">
+                    <label for="amount">Enter the amount you want to add:</label>
+                    <input type="number" id="amount" name="amount" class="form-control" required>
+                    <input type="hidden" name="accountNo" th:value="${customer.accountNo}">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-success">Confirm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Withdraw Funds Modal -->
+<div class="modal fade" id="withdrawFundsModal" tabindex="-1" aria-labelledby="withdrawFundsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Withdraw Funds</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/withDrawFunds}" method="post">
+                    <label for="withdrawAmount">Enter the amount you want to withdraw:</label>
+                    <input type="number" id="withdrawAmount" name="amount" class="form-control" required>
+                    <input type="hidden" name="accountNo" th:value="${customer.accountNo}">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger">Confirm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
